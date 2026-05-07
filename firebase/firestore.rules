@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function hasUserProfile() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+    function currentUser() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    function isChairperson() {
+      return hasUserProfile() && currentUser().role == 'CHAIRPERSON';
+    }
+    function isFinanceLead() {
+      return hasUserProfile() &&
+        currentUser().role in ['CHAIRPERSON', 'TREASURER'];
+    }
+    function userChamaId() {
+      return currentUser().chamaId;
+    }
+    function sameChama(data) {
+      return hasUserProfile() && data.chamaId == userChamaId();
+    }
+    match /chamas/{chamaId} {
+      allow read: if isSignedIn() && (!hasUserProfile() || chamaId == userChamaId());
+      allow create: if isSignedIn();
+      allow update, delete: if isChairperson() && chamaId == userChamaId();
+    }
+    match /users/{userId} {
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow read: if isSignedIn() && (request.auth.uid == userId || sameChama(resource.data));
+      allow update: if isSignedIn() && (request.auth.uid == userId || isChairperson());
+      allow delete: if isChairperson();
+    }
+    match /members/{memberId} {
+      allow read: if sameChama(resource.data);
+      allow create: if isSignedIn() && (
+        (request.auth.uid == memberId && request.resource.data.chamaId is string) ||
+        (isChairperson() && sameChama(request.resource.data))
+      );
+      allow update: if isChairperson() && sameChama(request.resource.data);
+      allow delete: if isChairperson() && sameChama(resource.data);
+    }
+    match /contributions/{contributionId} {
+      allow read: if sameChama(resource.data);
+      allow create: if sameChama(request.resource.data);
+      allow update, delete: if isFinanceLead() && sameChama(request.resource.data);
+    }
+    match /loans/{loanId} {
+      allow read: if sameChama(resource.data);
+      allow create: if isFinanceLead() && sameChama(request.resource.data);
+      allow update, delete: if isFinanceLead() && sameChama(request.resource.data);
+    }
+    match /meetings/{meetingId} {
+      allow read: if sameChama(resource.data);
+      allow write: if isChairperson() && sameChama(request.resource.data);
+    }
+    match /notifications/{notificationId} {
+      allow read: if sameChama(resource.data);
+      allow write: if isFinanceLead() && sameChama(request.resource.data);
+    }
+    match /mpesaLogs/{logId} {
+      allow read: if isFinanceLead();
+      allow write: if false;
+    }
+  }
+}

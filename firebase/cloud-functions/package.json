@@ -1,0 +1,11 @@
+{
+  "name": "chama-manager104-functions",
+  "private": true,
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.2.0",
+    "firebase-functions": "^5.0.1"
+  }
+}
