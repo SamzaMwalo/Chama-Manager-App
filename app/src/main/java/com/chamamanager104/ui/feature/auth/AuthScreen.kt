@@ -197,6 +197,8 @@ fun SignupScreen(
     var inviteCode by rememberSaveable { mutableStateOf("") }
     val isLoading = state.result is ResultState.Loading
     var isVisible by remember { mutableStateOf(false) }
+    val isCreatingChama = chamaName.isNotBlank() /// added later
+    val isJoiningChama = inviteCode.isNotBlank() /// added later
 
     AuthCardShell(
         title = "Create account",
@@ -226,8 +228,34 @@ fun SignupScreen(
             /// added
             label = { Text("Phone number") }, maxLines = 1, modifier = Modifier.fillMaxWidth())
         OutlinedTextField(value = email, onValueChange = { email = it }, leadingIcon = { Icon(imageVector = Icons.Outlined.Email, contentDescription = "Email", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Email") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email), maxLines = 1, modifier = Modifier.fillMaxWidth()) ///added the keyboard options,
-        OutlinedTextField(value = chamaName, onValueChange = { chamaName = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.chamaname_icon), contentDescription = "Chama Name", tint = MaterialTheme.colorScheme.primary) }, label = { Text("New chama name") }, maxLines = 1, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(value = inviteCode, onValueChange = { inviteCode = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.invite_code_icon), contentDescription = "Invite code", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Invite code to join") }, maxLines = 1, modifier = Modifier.fillMaxWidth())
+//        OutlinedTextField(value = chamaName, onValueChange = { chamaName = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.chamaname_icon), contentDescription = "Chama Name", tint = MaterialTheme.colorScheme.primary) }, label = { Text("New chama name") }, maxLines = 1, modifier = Modifier.fillMaxWidth()) /// replaced with below
+        /// added
+        OutlinedTextField(
+            value = chamaName,
+            onValueChange = {
+                chamaName = it
+                if (it.isNotBlank()) inviteCode = ""
+            },
+            enabled = inviteCode.isBlank(),
+            leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.chamaname_icon), contentDescription = "Chama Name", tint = MaterialTheme.colorScheme.primary) },
+            label = { Text("New chama name") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        /// added
+//        OutlinedTextField(value = inviteCode, onValueChange = { inviteCode = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.invite_code_icon), contentDescription = "Invite code", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Invite code to join") }, maxLines = 1, modifier = Modifier.fillMaxWidth()) /// replaced with below
+        /// added
+        OutlinedTextField(
+            value = inviteCode,
+            onValueChange = {
+                inviteCode = it
+                if (it.isNotBlank()) chamaName = ""
+            },
+            enabled = chamaName.isBlank(),
+            leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.invite_code_icon), contentDescription = "Invite code", tint = MaterialTheme.colorScheme.primary) },
+            label = { Text("Invite code to join") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        /// added
         OutlinedTextField(value = password, onValueChange = { password = it }, maxLines = 1,
             ///added
             leadingIcon = {
