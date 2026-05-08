@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.chamamanager104"
-        minSdk = 24
+        minSdk = 26 ///upgraded from 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
