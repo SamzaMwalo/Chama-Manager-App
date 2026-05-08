@@ -180,11 +180,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -196,7 +200,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.chamamanager104.R
 import com.chamamanager104.core.model.UserRole
 import com.chamamanager104.core.model.canManageMembers
 import com.chamamanager104.core.model.displayName
@@ -251,9 +259,9 @@ fun MembersScreen(
                             if (editingMemberId == null) "Add member" else "Edit member",
                             style = MaterialTheme.typography.titleLarge
                         )
-                        OutlinedTextField(value = fullName, onValueChange = { fullName = it }, label = { Text("Full name") }, modifier = Modifier.fillMaxWidth())
-                        OutlinedTextField(value = phone, onValueChange = { phone = it }, label = { Text("Phone number") }, modifier = Modifier.fillMaxWidth())
-                        OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email") }, modifier = Modifier.fillMaxWidth())
+                        OutlinedTextField(value = fullName, onValueChange = { fullName = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.user_icon), contentDescription = "Member name", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Full name") }, maxLines = 1, modifier = Modifier.fillMaxWidth())
+                        OutlinedTextField(value = phone, onValueChange = { phone = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.phone_icon), contentDescription = "Phone Number", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Phone number") }, maxLines = 1, modifier = Modifier.fillMaxWidth())
+                        OutlinedTextField(value = email, onValueChange = { email = it }, leadingIcon = { Icon(imageVector = Icons.Outlined.Email, contentDescription = "Email", tint = MaterialTheme.colorScheme.primary) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email), maxLines = 1, label = { Text("Email") }, modifier = Modifier.fillMaxWidth())
                         Button(
                             onClick = {
                                 onSave(editingMemberId, fullName, phone, email)

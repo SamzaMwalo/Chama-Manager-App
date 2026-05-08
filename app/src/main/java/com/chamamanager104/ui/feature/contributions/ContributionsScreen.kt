@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -18,7 +19,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import com.chamamanager104.R
 import com.chamamanager104.ui.SectionColumn
 
 @Composable
@@ -37,9 +41,9 @@ fun ContributionsScreen(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                OutlinedTextField(value = memberId, onValueChange = { memberId = it }, label = { Text("Member ID") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(value = amount, onValueChange = { amount = it }, label = { Text("Amount (KES)") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(value = dueOn, onValueChange = { dueOn = it }, label = { Text("Due date") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = memberId, onValueChange = { memberId = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.userid_icon), contentDescription = "Member ID", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Member ID") }, maxLines = 1, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = amount, onValueChange = { amount = it }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.currency_icon), contentDescription = "Amount", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Amount (KES)") }, maxLines = 1, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = dueOn, onValueChange = { dueOn = it }, label = { Text("Due date") }, leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.calender), contentDescription = "Due Date", tint = MaterialTheme.colorScheme.primary) }, maxLines = 1, modifier = Modifier.fillMaxWidth())
                 Button(onClick = { onRecord(memberId, amount, dueOn) }, modifier = Modifier.fillMaxWidth()) {
                     Text("Record contribution")
                 }
