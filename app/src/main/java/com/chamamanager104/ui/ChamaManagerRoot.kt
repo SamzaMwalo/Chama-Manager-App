@@ -89,8 +89,6 @@ fun ChamaManagerRoot(
     val userSession by appViewModel.userSession.collectAsStateWithLifecycle()
     val role = userSession?.role ?: UserRole.MEMBER
     val authenticated = userSession != null
-
-//    val startDestination = if (authenticated) NavRoute.Dashboard.route else NavRoute.Login.route/// changed the start destination to onboarding screen
     val startDestination = if (authenticated) NavRoute.Dashboard.route else NavRoute.Onboarding.route
 
     val destinations = buildList {
@@ -111,13 +109,12 @@ fun ChamaManagerRoot(
     LaunchedEffect(authenticated) {
         if (authenticated) {
             navController.navigate(NavRoute.Dashboard.route) {
-//                popUpTo(NavRoute.Login.route) { inclusive = true } /// removed to add below
                 popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
 
                 launchSingleTop = true
             }
-        } else {
-//            navController.navigate(NavRoute.Login.route) { ///removed to add below
+        }
+        else {
             navController.navigate(NavRoute.Onboarding.route) {
 
             popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
@@ -192,9 +189,8 @@ fun ChamaManagerRoot(
                 startDestination = startDestination,
                 modifier = Modifier.padding(padding)
             ) {
-                /// added
                 composable(NavRoute.Onboarding.route) {
-                    OnboardingScreen( /// added an importation
+                    OnboardingScreen(
                         onContinue = {
                             navController.navigate(NavRoute.Login.route) {
                                 popUpTo(NavRoute.Onboarding.route) { inclusive = true }
@@ -203,7 +199,7 @@ fun ChamaManagerRoot(
                         }
                     )
                 }
-                /// added
+
                 composable(NavRoute.Login.route) {
                     val viewModel: AuthViewModel = hiltViewModel()
                     LoginScreen(
@@ -213,6 +209,7 @@ fun ChamaManagerRoot(
                         onNavigateToForgotPassword = { navController.navigate(NavRoute.ForgotPassword.route) }
                     )
                 }
+
                 composable(NavRoute.Signup.route) {
                     val viewModel: AuthViewModel = hiltViewModel()
                     SignupScreen(
@@ -221,6 +218,7 @@ fun ChamaManagerRoot(
                         onNavigateToLogin = { navController.popBackStack() }
                     )
                 }
+
                 composable(NavRoute.ForgotPassword.route) {
                     val viewModel: AuthViewModel = hiltViewModel()
                     ForgotPasswordScreen(
@@ -229,6 +227,7 @@ fun ChamaManagerRoot(
                         onNavigateToLogin = { navController.popBackStack() }
                     )
                 }
+
                 composable(NavRoute.Dashboard.route) {
                     val viewModel: DashboardViewModel = hiltViewModel()
                     DashboardScreen(
@@ -237,6 +236,7 @@ fun ChamaManagerRoot(
                         onSignOut = appViewModel::signOut
                     )
                 }
+
                 composable(NavRoute.Members.route) {
                     val viewModel: MembersViewModel = hiltViewModel()
                     MembersScreen(
@@ -246,6 +246,7 @@ fun ChamaManagerRoot(
                         onDelete = viewModel::deleteMember
                     )
                 }
+
                 composable(NavRoute.Contributions.route) {
                     val viewModel: ContributionsViewModel = hiltViewModel()
                     ContributionsScreen(
@@ -253,6 +254,7 @@ fun ChamaManagerRoot(
                         onRecord = viewModel::recordContribution
                     )
                 }
+
                 composable(NavRoute.Loans.route) {
                     val viewModel: LoansViewModel = hiltViewModel()
                     LoansScreen(
@@ -260,6 +262,7 @@ fun ChamaManagerRoot(
                         onSave = viewModel::saveLoan
                     )
                 }
+
                 composable(NavRoute.Meetings.route) {
                     val viewModel: MeetingsViewModel = hiltViewModel()
                     MeetingsScreen(
@@ -267,9 +270,11 @@ fun ChamaManagerRoot(
                         onSave = viewModel::saveMeeting
                     )
                 }
+
                 composable(NavRoute.Reports.route) {
                     ReportsScreen()
                 }
+
                 composable(NavRoute.Notifications.route) {
                     val viewModel: NotificationsViewModel = hiltViewModel()
                     NotificationsScreen(

@@ -49,17 +49,6 @@ class AuthViewModel @Inject constructor(
         inviteCode: String
     ) {
         viewModelScope.launch {
-            /// block below will be replaced with the block below it
-//            if (fullName.isBlank() || phoneNumber.isBlank() || email.isBlank() || password.isBlank()) {
-//                _state.value = _state.value.copy(result = ResultState.Error("Full name, phone, email, and password are required"))
-//                return@launch
-//            }
-//            if (chamaName.isBlank() && inviteCode.isBlank()) {
-//                _state.value = _state.value.copy(result = ResultState.Error("Enter a chama name to create one, or provide an invite code to join one"))
-//                return@launch
-//            }
-            /// replaced with below
-            /// added
             if (fullName.isBlank() || phoneNumber.isBlank() || email.isBlank() || password.isBlank()) {
                 _state.value = _state.value.copy(
                     result = ResultState.Error("Full name, phone, email, and password are required")
@@ -91,7 +80,6 @@ class AuthViewModel @Inject constructor(
                 )
                 return@launch
             }
-            /// added
 
             _state.value = _state.value.copy(result = ResultState.Loading)
             val result = authRepository.signUp(

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -72,43 +73,48 @@ fun LoansScreen(
                         onValueChange = { memberId = it },
                         leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.userid_icon), contentDescription = "Member ID", tint = MaterialTheme.colorScheme.primary) },
                         label = { Text("Member ID") },
-                        modifier = Modifier.fillMaxWidth(),
-                        maxLines = 1
-                    )
+                        maxLines = 1,
+                        shape = RoundedCornerShape(27.dp),
+                        modifier = Modifier.fillMaxWidth()
+                        )
 
                     OutlinedTextField(
                         value = principal,
                         onValueChange = { principal = it },
                         leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.currency_icon), contentDescription = "Principal", tint = MaterialTheme.colorScheme.primary) },
                         label = { Text("Principal Amount") },
-                        modifier = Modifier.fillMaxWidth(),
-                        maxLines = 1
-                    )
+                        maxLines = 1,
+                        shape = RoundedCornerShape(27.dp),
+                        modifier = Modifier.fillMaxWidth()
+                        )
 
                     OutlinedTextField(
                         value = rate,
                         onValueChange = { rate = it },
                         label = { Text("Interest Rate (%)") },
-                        modifier = Modifier.fillMaxWidth(),
-                        maxLines = 1
-                    )
+                        maxLines = 1,
+                        shape = RoundedCornerShape(27.dp),
+                        modifier = Modifier.fillMaxWidth()
+                        )
 
                     OutlinedTextField(
                         value = duration,
                         onValueChange = { duration = it },
                         label = { Text("Duration (Months)") },
-                        modifier = Modifier.fillMaxWidth(),
-                        maxLines = 1
-                    )
+                        maxLines = 1,
+                        shape = RoundedCornerShape(27.dp),
+                        modifier = Modifier.fillMaxWidth()
+                        )
 
                     OutlinedTextField(
                         value = notes,
                         onValueChange = { notes = it },
                         leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.notes_icon), contentDescription = "Purpose of Loan", tint = MaterialTheme.colorScheme.primary) },
                         label = { Text("Purpose of Loan") },
-                        modifier = Modifier.fillMaxWidth(),
-                        maxLines = 2
-                    )
+                        maxLines = 2,
+                        shape = RoundedCornerShape(27.dp),
+                        modifier = Modifier.fillMaxWidth()
+                        )
 
                     Button(
                         onClick = {
