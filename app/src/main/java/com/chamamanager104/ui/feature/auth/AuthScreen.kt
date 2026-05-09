@@ -142,7 +142,7 @@ fun LoginScreen(
             label = { Text("Email") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             maxLines = 1,
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -171,7 +171,7 @@ fun LoginScreen(
                 }
             },
             label = { Text("Password") },
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             maxLines = 1,
             modifier = Modifier.fillMaxWidth()
         )
@@ -230,7 +230,7 @@ fun SignupScreen(
             leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.user_icon), contentDescription = "User name", tint = MaterialTheme.colorScheme.primary) },
             label = { Text("Full name") },
             maxLines = 1,
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -241,7 +241,7 @@ fun SignupScreen(
             label = { Text("Phone number") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             maxLines = 1,
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -252,7 +252,7 @@ fun SignupScreen(
             label = { Text("Email") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             maxLines = 1,
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -265,7 +265,7 @@ fun SignupScreen(
             enabled = inviteCode.isBlank(),
             leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.chamaname_icon), contentDescription = "Chama Name", tint = MaterialTheme.colorScheme.primary) },
             label = { Text("New chama name") },
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -278,7 +278,7 @@ fun SignupScreen(
             enabled = chamaName.isBlank(),
             leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.invite_code_icon), contentDescription = "Invite code", tint = MaterialTheme.colorScheme.primary) },
             label = { Text("Invite code to join") },
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -316,7 +316,7 @@ fun SignupScreen(
             },
             label = { Text("Password") },
             maxLines = 1,
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(27.dp),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -329,6 +329,7 @@ fun SignupScreen(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
             textColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
         StatusBanner(
             message = if (inviteCode.isBlank()) {
                 "Leave invite code empty to create a new chama with the name above."
@@ -346,6 +347,7 @@ fun SignupScreen(
         ) {
             Text(if (isLoading) "Creating account..." else "Create ${selectedRole.displayName()} account")
         }
+
         TextButton(onClick = onNavigateToLogin, modifier = Modifier.fillMaxWidth()) {
             Text("Back to login")
         }
@@ -366,7 +368,17 @@ fun ForgotPasswordScreen(
         subtitle = "Enter your email and we will send a password reset link.",
         state = state
     ) {
-        OutlinedTextField(value = email, onValueChange = { email = it }, leadingIcon = { Icon(imageVector = Icons.Outlined.Email, contentDescription = "Email", tint = MaterialTheme.colorScheme.primary) }, label = { Text("Email") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email), shape = RoundedCornerShape(24.dp), modifier = Modifier.fillMaxWidth())///added the keyboard options,
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            leadingIcon = { Icon(imageVector = Icons.Outlined.Email, contentDescription = "Email", tint = MaterialTheme.colorScheme.primary) },
+            label = { Text("Email") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            maxLines = 1,
+            shape = RoundedCornerShape(27.dp),
+            modifier = Modifier.fillMaxWidth()
+        )
+
         Button(
             onClick = { onSendReset(email) },
             enabled = !isLoading,
@@ -374,6 +386,7 @@ fun ForgotPasswordScreen(
         ) {
             Text(if (isLoading) "Sending..." else "Send reset email")
         }
+
         TextButton(onClick = onNavigateToLogin, modifier = Modifier.fillMaxWidth()) {
             Text("Back to login")
         }
